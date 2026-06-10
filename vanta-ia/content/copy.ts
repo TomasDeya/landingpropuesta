@@ -7,10 +7,10 @@ export const WA_LINK =
 export const nav = {
   brand: { prefix: "Octoflow", suffix: "Labs" },
   links: [
-    { label: "Servicios", href: "#servicios" },
-    { label: "Proceso",   href: "#proceso"   },
-    { label: "Clientes",  href: "#clientes"  },
-    { label: "Contacto",  href: "#contacto"  },
+    { label: "Soluciones", href: "#servicios" },
+    { label: "Proceso",    href: "#proceso"   },
+    { label: "Clientes",   href: "#clientes"  },
+    { label: "Contacto",   href: "#contacto"  },
   ],
   cta: "Contactar",
 } as const;
@@ -79,32 +79,32 @@ export const soluciones = {
       icon:        "MessageSquare",
       title:       "Agente de Atención con IA",
       description:
-        "Implementamos un agente conectado a tu información que responde las consultas de tus clientes al instante, con precio, stock y disponibilidad actualizados — las 24 horas.",
-      tags:        ["WhatsApp", "24/7", "Velocidad"],
+        "Implementamos un Agente de Atención con IA conectado a tu información, que responde las consultas de tus clientes al instante.",
+      tags:        ["Velocidad", "Disponibilidad", "Cercanía"],
     },
     {
       number:      "02",
       icon:        "RefreshCw",
       title:       "Recuperación de Leads",
       description:
-        "Implementamos un agente que detecta a los clientes que consultaron y no compraron, y retoma el contacto en el momento oportuno. Hasta 1 de cada 4 leads se pueden recuperar.",
-      tags:        ["Seguimiento", "Activación", "Ventas"],
+        "Implementamos un agente que detecta a los clientes que consultaron y no compraron, y retoma el contacto en el momento oportuno.",
+      tags:        ["Oportunidad", "Seguimiento", "Activación"],
     },
     {
       number:      "03",
       icon:        "BarChart2",
       title:       "Asistente del Negocio IA",
       description:
-        "Implementamos un asistente con IA que responde al instante tus consultas de stock, ventas y movimientos — sin abrir planillas ni revisar sistemas.",
-      tags:        ["Stock", "Ventas", "Reportes"],
+        "Implementamos un Asistente con IA que responde al instante tus consultas de stock, ventas y movimientos, sin abrir planillas.",
+      tags:        ["Visibilidad", "Facilidad", "Control"],
     },
     {
       number:      "04",
       icon:        "Zap",
       title:       "Automatización Integral de Procesos",
       description:
-        "Revisamos tu negocio a fondo, detectamos qué te hace perder tiempo y automatizamos tus procesos de punta a punta, listos para escalar.",
-      tags:        ["Diagnóstico", "Automatización", "Escala"],
+        "Revisamos tu negocio a fondo, detectamos qué te hace perder tiempo y automatizamos tus procesos de punta a punta.",
+      tags:        ["Claridad", "Foco", "Ejecución"],
     },
   ],
 } as const;
@@ -207,10 +207,10 @@ export const footer = {
   brand: { prefix: "Octoflow", suffix: "Labs" },
   tagline: "Automatización con IA para empresas en Argentina y LATAM.",
   links: [
-    { label: "Servicios", href: "#servicios" },
-    { label: "Proceso",   href: "#proceso"   },
-    { label: "Clientes",  href: "#clientes"  },
-    { label: "Contacto",  href: "#contacto"  },
+    { label: "Soluciones", href: "#servicios" },
+    { label: "Proceso",    href: "#proceso"   },
+    { label: "Clientes",   href: "#clientes"  },
+    { label: "Contacto",   href: "#contacto"  },
   ],
   socials: [
     { label: "LinkedIn",  href: "#" },
