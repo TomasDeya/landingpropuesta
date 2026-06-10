@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
 
 type ButtonProps = {
-  variant?: "primary" | "ghost";
+  variant?: "primary" | "ghost" | "contrast";
   className?: string;
   children: React.ReactNode;
   href?: string;
@@ -22,9 +22,11 @@ export default function Button({
 
   const variants = {
     primary:
-      "bg-[var(--flow-violet)] text-white hover:bg-[var(--deep-violet)] hover:scale-[1.02] active:scale-[0.99]",
+      "bg-[var(--brand-accent)] text-white hover:bg-[var(--brand)] hover:scale-[1.02] active:scale-[0.99] shadow-[0_10px_30px_-12px_rgba(var(--brand-accent-rgb),0.6)]",
     ghost:
-      "bg-transparent text-[var(--flow-violet)] border border-[rgba(103,87,255,0.35)] hover:border-[var(--flow-violet)] hover:bg-[rgba(103,87,255,0.06)]",
+      "bg-transparent text-[var(--brand-accent)] border border-[var(--border-strong)] hover:border-[var(--brand-accent)] hover:bg-[rgba(var(--brand-accent-rgb),0.06)]",
+    contrast:
+      "bg-white text-[var(--brand)] hover:bg-[var(--violet-50)] hover:scale-[1.02] active:scale-[0.99] shadow-[0_12px_36px_-12px_rgba(0,0,0,0.45)]",
   };
 
   const cls = `${base} ${variants[variant]} ${className}`;

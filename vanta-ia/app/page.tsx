@@ -1,12 +1,13 @@
-import Navbar          from "@/components/layout/Navbar";
-import Footer          from "@/components/layout/Footer";
-import Hero            from "@/components/sections/Hero";
-import Problema        from "@/components/sections/Problema";
-import Soluciones      from "@/components/sections/Soluciones";
-import Proceso         from "@/components/sections/Proceso";
-import Clientes        from "@/components/sections/Clientes";
-import Diferenciadores from "@/components/sections/Diferenciadores";
-import CtaFinal        from "@/components/sections/CtaFinal";
+import Navbar            from "@/components/layout/Navbar";
+import Footer            from "@/components/layout/Footer";
+import Hero              from "@/components/sections/Hero";
+import Problema          from "@/components/sections/Problema";
+import Soluciones        from "@/components/sections/Soluciones";
+import SolucionesDetalle from "@/components/sections/SolucionesDetalle";
+import Proceso           from "@/components/sections/Proceso";
+import Clientes          from "@/components/sections/Clientes";
+import Diferenciadores   from "@/components/sections/Diferenciadores";
+import CtaFinal          from "@/components/sections/CtaFinal";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         <Hero />
         <Problema />
         <Soluciones />
+        <SolucionesDetalle />
         <Proceso />
         <Clientes />
         <Diferenciadores />

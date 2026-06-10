@@ -14,7 +14,7 @@ export default function LogoPill({ initials, name, industry, color, logo }: Logo
       className="
         group flex items-center gap-3 px-4 py-2.5 rounded-[100px] shrink-0
         bg-[var(--cloud)] border border-[var(--border)]
-        hover:border-[rgba(103,87,255,0.4)] hover:bg-[rgba(103,87,255,0.05)]
+        hover:border-[var(--border-strong)] hover:bg-[var(--violet-50)]
         transition-all duration-200 cursor-default select-none
       "
     >

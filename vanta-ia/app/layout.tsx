@@ -1,5 +1,6 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
+import Providers from "@/components/Providers";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -13,38 +14,38 @@ const BASE_URL = "https://octoflowlabs.netlify.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
-  title: "Agentes de IA para Empresas en Argentina | Octoflow Labs",
+  title: "Agentes de IA para Empresas en Argentina | OctoFlow",
   description:
-    "Implementamos agentes de inteligencia artificial que atienden clientes, cierran ventas y generan reportes automÃ¡ticos. Soluciones de IA para PYMEs y empresas medianas en Argentina y LATAM. ImplementaciÃ³n en 2 semanas.",
+    "Implementamos agentes de IA que atienden a tus clientes, recuperan ventas y te dan el control de tu negocio — sin que muevas un dedo. Soluciones de IA para PYMEs y empresas medianas en Argentina y LATAM.",
   keywords: [
     "agentes de IA para empresas",
-    "automatizaciÃ³n con inteligencia artificial",
+    "automatización con inteligencia artificial",
     "chatbot de ventas Argentina",
-    "agente de atenciÃ³n al cliente IA",
-    "automatizaciÃ³n empresarial Argentina",
+    "agente de atención al cliente IA",
+    "automatización empresarial Argentina",
     "IA para PYMEs",
     "inteligencia artificial para empresas LATAM",
     "chatbot WhatsApp empresa",
-    "reporterÃ­a automatizada IA",
-    "implementaciÃ³n IA Argentina",
+    "reportería automatizada IA",
+    "implementación IA Argentina",
   ],
   alternates: {
     canonical: BASE_URL,
   },
   openGraph: {
-    title: "Agentes de IA para Empresas en Argentina | Octoflow Labs",
+    title: "Agentes de IA para Empresas en Argentina | OctoFlow",
     description:
-      "Implementamos agentes de IA que atienden clientes, cierran ventas y generan reportes automÃ¡ticos. Para PYMEs y empresas medianas en Argentina y LATAM.",
+      "Implementamos agentes de IA que atienden a tus clientes, recuperan ventas y te dan el control de tu negocio. Para PYMEs y empresas medianas en Argentina y LATAM.",
     url: BASE_URL,
-    siteName: "Octoflow Labs",
+    siteName: "OctoFlow",
     locale: "es_AR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Agentes de IA para Empresas | Octoflow Labs",
+    title: "Agentes de IA para Empresas | OctoFlow",
     description:
-      "AutomatizÃ¡ tu empresa con agentes de IA para ventas, atenciÃ³n al cliente y reporterÃ­a. ImplementaciÃ³n en 2 semanas.",
+      "Automatizá tu empresa con agentes de IA para ventas, atención al cliente y reportería. Implementación en días.",
   },
   robots: {
     index: true,
@@ -64,14 +65,14 @@ const schemaOrg = {
     {
       "@type": "Organization",
       "@id": `${BASE_URL}/#organization`,
-      name: "Octoflow Labs",
+      name: "OctoFlow",
       url: BASE_URL,
       description:
-        "Agencia especializada en implementaciÃ³n de agentes de inteligencia artificial para PYMEs y empresas medianas en Argentina y LATAM.",
-      areaServed: ["Argentina", "MÃ©xico", "Colombia", "LATAM"],
+        "Agencia especializada en implementación de agentes de inteligencia artificial para PYMEs y empresas medianas en Argentina y LATAM.",
+      areaServed: ["Argentina", "México", "Colombia", "LATAM"],
       knowsAbout: [
         "Inteligencia Artificial",
-        "AutomatizaciÃ³n Empresarial",
+        "Automatización Empresarial",
         "Chatbots",
         "Agentes de IA",
         "Procesamiento de Lenguaje Natural",
@@ -81,7 +82,7 @@ const schemaOrg = {
       "@type": "WebSite",
       "@id": `${BASE_URL}/#website`,
       url: BASE_URL,
-      name: "Octoflow Labs",
+      name: "OctoFlow",
       publisher: { "@id": `${BASE_URL}/#organization` },
       inLanguage: "es-AR",
     },
@@ -89,37 +90,37 @@ const schemaOrg = {
       "@type": "WebPage",
       "@id": `${BASE_URL}/#webpage`,
       url: BASE_URL,
-      name: "Agentes de IA para Empresas en Argentina | Octoflow Labs",
+      name: "Agentes de IA para Empresas en Argentina | OctoFlow",
       isPartOf: { "@id": `${BASE_URL}/#website` },
       about: { "@id": `${BASE_URL}/#organization` },
       description:
-        "Implementamos agentes de IA que atienden clientes, cierran ventas y generan reportes automÃ¡ticos para PYMEs y empresas medianas en Argentina y LATAM.",
+        "Implementamos agentes de IA que atienden a tus clientes, recuperan ventas y te dan el control de tu negocio para PYMEs y empresas medianas en Argentina y LATAM.",
       inLanguage: "es-AR",
     },
     {
       "@type": "Service",
-      name: "Agente de Ventas IA",
+      name: "Agente de Atención con IA",
       provider: { "@id": `${BASE_URL}/#organization` },
       description:
-        "Agente de inteligencia artificial que atiende consultas por WhatsApp o web, califica leads, hace seguimiento automÃ¡tico y cierra mÃ¡s ventas.",
-      serviceType: "AutomatizaciÃ³n de Ventas",
+        "Implementamos un Agente de Atención con IA conectado a tu información, que responde las consultas de tus clientes al instante.",
+      serviceType: "Atención al Cliente Automatizada",
       areaServed: "Argentina",
     },
     {
       "@type": "Service",
-      name: "Agente de AtenciÃ³n al Cliente IA",
+      name: "Recuperación de Leads",
       provider: { "@id": `${BASE_URL}/#organization` },
       description:
-        "Agente de IA que resuelve dudas frecuentes, gestiona reclamos y deriva casos complejos a un humano en el momento justo.",
-      serviceType: "AtenciÃ³n al Cliente Automatizada",
+        "Implementamos un agente que detecta a los clientes que consultaron y no compraron, y retoma el contacto en el momento oportuno.",
+      serviceType: "Automatización de Ventas",
       areaServed: "Argentina",
     },
     {
       "@type": "Service",
-      name: "Agente de ReporterÃ­a Automatizada",
+      name: "Asistente del Negocio IA",
       provider: { "@id": `${BASE_URL}/#organization` },
       description:
-        "Agente de IA que consolida datos de mÃºltiples fuentes y entrega reportes ejecutivos automÃ¡ticos.",
+        "Implementamos un Asistente con IA que responde al instante tus consultas de stock, ventas y movimientos, sin abrir planillas.",
       serviceType: "Business Intelligence Automatizado",
       areaServed: "Argentina",
     },
@@ -138,9 +139,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
         />
       </head>
-      <body className={`${manrope.variable} antialiased`}>{children}</body>
+      <body className={`${manrope.variable} antialiased`}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
-
-

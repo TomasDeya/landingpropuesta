@@ -47,14 +47,14 @@ export default function Clientes() {
           className="pointer-events-none absolute left-0 top-0 bottom-0 z-10"
           style={{
             width: "calc((100vw - min(100vw, 72rem)) / 2 + 1.5rem + 3rem)",
-            background: "linear-gradient(to right, #FFFFFF 65%, transparent)",
+            background: "linear-gradient(to right, var(--white) 65%, transparent)",
           }}
         />
         <div
           className="pointer-events-none absolute right-0 top-0 bottom-0 z-10"
           style={{
             width: "calc((100vw - min(100vw, 72rem)) / 2 + 1.5rem + 3rem)",
-            background: "linear-gradient(to left, #FFFFFF 65%, transparent)",
+            background: "linear-gradient(to left, var(--white) 65%, transparent)",
           }}
         />
 
@@ -68,7 +68,7 @@ export default function Clientes() {
                 name={item.name}
                 industry={item.industry}
                 color={item.color}
-                logo={(item as any).logo}
+                logo={item.logo}
               />
             ))}
           </div>
@@ -84,7 +84,7 @@ export default function Clientes() {
                 name={item.name}
                 industry={item.industry}
                 color={item.color}
-                logo={(item as any).logo}
+                logo={item.logo}
               />
             ))}
           </div>

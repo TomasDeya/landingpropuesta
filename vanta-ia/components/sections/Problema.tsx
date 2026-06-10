@@ -51,13 +51,13 @@ export default function Problema() {
                   className="flex flex-col gap-4 p-6 rounded-[var(--radius-md)] bg-[var(--cloud)] border border-[var(--border)]"
                 >
                   <div
-                    className="w-10 h-10 rounded-[var(--radius-sm)] flex items-center justify-center shrink-0"
+                    className="w-10 h-10 rounded-[var(--radius-sm)] flex items-center justify-center shrink-0 text-[var(--brand-accent)]"
                     style={{
-                      background: "rgba(103,87,255,0.08)",
-                      border:     "1px solid rgba(103,87,255,0.18)",
+                      background: "color-mix(in srgb, var(--brand-accent) 8%, transparent)",
+                      border:     "1px solid color-mix(in srgb, var(--brand-accent) 18%, transparent)",
                     }}
                   >
-                    <Icon size={18} color="#6757FF" />
+                    <Icon size={18} />
                   </div>
                   <div className="flex flex-col gap-1.5">
                     <h3 className="text-[13px] font-semibold text-[var(--ink)]">{card.title}</h3>

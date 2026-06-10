@@ -3,94 +3,97 @@
 import { motion } from "framer-motion";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { proceso } from "@/content/copy";
-import { fadeUp, stagger } from "@/lib/motion";
+import { fadeUp, stagger, EASE, VIEWPORT } from "@/lib/motion";
 
 export default function Proceso() {
   return (
-    <section id="proceso" className="bg-[var(--cloud)] py-24 px-6">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={stagger}
-        >
+    <section id="proceso" className="bg-[var(--cloud)] px-6 py-24">
+      <div className="mx-auto max-w-6xl">
+        <motion.div initial="hidden" whileInView="visible" viewport={VIEWPORT} variants={stagger}>
           <motion.div variants={fadeUp}>
             <SectionLabel>{proceso.label}</SectionLabel>
           </motion.div>
-
           <motion.h2
             variants={fadeUp}
-            className="text-3xl md:text-[36px] font-light leading-tight tracking-tight text-[var(--ink)] mb-12 max-w-xl"
+            className="max-w-xl text-3xl font-light leading-tight tracking-tight text-[var(--ink)] md:text-[36px]"
           >
             {proceso.h2.prefix}{" "}
-            <strong className="font-semibold">{proceso.h2.strong}</strong>{" "}
+            <strong className="gradient-text font-semibold">{proceso.h2.strong}</strong>{" "}
             {proceso.h2.suffix}
           </motion.h2>
+        </motion.div>
 
-          {/* Timeline container */}
-          <motion.div variants={fadeUp} className="relative">
+        {/* Timeline */}
+        <div className="relative mt-14">
+          {/* Línea vertical (mobile) */}
+          <motion.div
+            className="timeline-line absolute left-[18px] top-3 w-px md:hidden"
+            style={{ height: "calc(100% - 1.5rem)", transformOrigin: "top" }}
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={VIEWPORT}
+            transition={{ duration: 1.4, ease: EASE, delay: 0.3 }}
+          />
+          {/* Línea horizontal (desktop) */}
+          <motion.div
+            className="timeline-line-h absolute left-0 right-0 top-[18px] hidden h-px md:block"
+            style={{ transformOrigin: "left" }}
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={VIEWPORT}
+            transition={{ duration: 1.6, ease: EASE, delay: 0.3 }}
+          />
 
-            {/* Línea vertical animada */}
-            <motion.div
-              className="timeline-line absolute left-[17px] top-5 w-px"
-              initial={{ scaleY: 0 }}
-              whileInView={{ scaleY: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-              style={{
-                height: "calc(100% - 2.5rem)",
-                transformOrigin: "top",
-              }}
-            />
-
-            {/* Steps */}
-            {proceso.steps.map((step, i) => (
-              <motion.div
+          {/* Pasos */}
+          <motion.ol
+            initial="hidden"
+            whileInView="visible"
+            viewport={VIEWPORT}
+            variants={stagger}
+            className="relative flex flex-col gap-9 md:flex-row md:gap-4"
+          >
+            {proceso.steps.map((step) => (
+              <motion.li
                 key={step.number}
-                initial={{ opacity: 0, x: -24 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.55,
-                  delay: 0.3 + i * 0.22,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="flex items-start gap-6 py-7 pl-0 border-b border-[var(--border)] last:border-none"
+                variants={fadeUp}
+                className="relative flex flex-1 flex-row items-start gap-5 md:flex-col md:items-center md:gap-4 md:text-center"
               >
-                {/* Círculo numerado */}
+                {/* Nodo */}
                 <div
-                  className="w-9 h-9 rounded-full flex items-center justify-center text-[13px] font-semibold shrink-0 text-[var(--flow-violet)] relative z-10"
+                  className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-[13px] font-semibold text-[var(--brand-accent)]"
                   style={{
-                    background: "#FFFFFF",
-                    border: "1px solid rgba(103,87,255,0.35)",
-                    boxShadow: "0 0 14px rgba(103,87,255,0.12)",
+                    border: "1px solid var(--border-strong)",
+                    boxShadow: "0 0 14px rgba(var(--brand-accent-rgb),0.18)",
                   }}
                 >
                   {step.number}
                 </div>
 
-                {/* Texto */}
-                <div className="flex flex-col gap-1.5 flex-1 min-w-0 pt-1">
-                  <h3 className="text-[15px] font-semibold text-[var(--ink)]">
-                    {step.title}
-                  </h3>
-                  <p className="text-[13px] leading-relaxed text-[var(--slate)]">
+                {/* Contenido */}
+                <div className="flex flex-col gap-1.5 md:items-center">
+                  <span className="inline-block w-fit rounded-full bg-[var(--violet-100)] px-2.5 py-0.5 font-mono text-[11px] text-[var(--brand)]">
+                    {step.duration}
+                  </span>
+                  <h3 className="text-[15px] font-semibold text-[var(--ink)]">{step.title}</h3>
+                  <p className="max-w-[22ch] text-[13px] leading-relaxed text-[var(--slate)]">
                     {step.description}
                   </p>
                 </div>
-
-                {/* Duración */}
-                <span
-                  className="text-[12px] font-mono shrink-0 pt-1 text-[var(--flow-violet)]"
-                  style={{ opacity: 0.65 }}
-                >
-                  {step.duration}
-                </span>
-              </motion.div>
+              </motion.li>
             ))}
-          </motion.div>
-        </motion.div>
+          </motion.ol>
+        </div>
+
+        {/* Nota */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={VIEWPORT}
+          transition={{ delay: 0.6 }}
+          className="mt-10 max-w-2xl text-[12px] leading-relaxed text-[var(--slate)]"
+        >
+          <span className="font-semibold text-[var(--ink)]">Nota:</span> {proceso.note}
+        </motion.p>
       </div>
     </section>
   );

@@ -3,28 +3,28 @@ import { footer } from "@/content/copy";
 
 export default function Footer() {
   return (
-    <footer className="bg-white border-t border-[var(--border)]">
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* Col 1 — Marca */}
+    <footer className="border-t border-[var(--border)] bg-white">
+      <div className="mx-auto max-w-6xl px-6 py-12">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+          {/* Marca */}
           <div className="flex flex-col gap-3">
             <Logo size="sm" />
-            <p className="text-sm text-[var(--slate)] max-w-[220px] leading-relaxed">
+            <p className="max-w-[240px] text-sm leading-relaxed text-[var(--slate)]">
               {footer.tagline}
             </p>
           </div>
 
-          {/* Col 2 — Links */}
+          {/* Navegación */}
           <div className="flex flex-col gap-3">
             <span className="text-xs font-semibold uppercase tracking-widest text-[var(--slate)]">
-              Navegación
+              {footer.navLabel}
             </span>
             <ul className="flex flex-col gap-2.5">
               {footer.links.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-sm text-[var(--slate)] hover:text-[var(--ink)] transition-colors duration-200"
+                    className="text-sm text-[var(--slate)] transition-colors duration-200 hover:text-[var(--brand-accent)]"
                   >
                     {link.label}
                   </a>
@@ -33,11 +33,26 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 3 — Copy */}
-          <div className="flex flex-col gap-4">
-            <p className="text-xs text-[var(--slate)] opacity-50 mt-auto">
-              {footer.copy}
-            </p>
+          {/* Redes */}
+          <div className="flex flex-col gap-3">
+            <span className="text-xs font-semibold uppercase tracking-widest text-[var(--slate)]">
+              {footer.socialsLabel}
+            </span>
+            <ul className="flex flex-col gap-2.5">
+              {footer.socials.map((s) => (
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-[var(--slate)] transition-colors duration-200 hover:text-[var(--brand-accent)]"
+                  >
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-auto pt-4 text-xs text-[var(--slate)] opacity-60">{footer.copy}</p>
           </div>
         </div>
       </div>

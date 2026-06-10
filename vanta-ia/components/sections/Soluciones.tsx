@@ -1,169 +1,143 @@
 "use client";
 
-import { useRef, useState } from "react";
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  useSpring,
-  useMotionTemplate,
-} from "framer-motion";
-import { MessageSquare, RefreshCw, BarChart2, Zap } from "lucide-react";
+import { motion } from "framer-motion";
+import { MessageSquare, RefreshCw, BarChart2, Zap, type LucideIcon } from "lucide-react";
 import SectionLabel from "@/components/ui/SectionLabel";
+import Octopus from "@/components/octopus/Octopus";
 import { soluciones } from "@/content/copy";
-import { fadeUp, staggerSlow } from "@/lib/motion";
+import { fadeUp, staggerSlow, scaleIn, VIEWPORT } from "@/lib/motion";
 
-const iconMap = { MessageSquare, RefreshCw, BarChart2, Zap } as const;
-type IconKey = keyof typeof iconMap;
-type CardData = (typeof soluciones.cards)[number];
+const iconMap: Record<string, LucideIcon> = { MessageSquare, RefreshCw, BarChart2, Zap };
+const ACCENTS = ["--violet-600", "--violet-500", "--violet-700", "--violet-400"];
 
-/* ── 3D Tilt Card ─────────────────────────────────────────────────── */
-function TiltCard({ card }: { card: CardData }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [hovered, setHovered] = useState(false);
-  const Icon = iconMap[card.icon as IconKey];
+type Card = (typeof soluciones.cards)[number];
 
-  const rawX = useMotionValue(0);
-  const rawY = useMotionValue(0);
-  const springX = useSpring(rawX, { stiffness: 200, damping: 28 });
-  const springY = useSpring(rawY, { stiffness: 200, damping: 28 });
-
-  const rotateX = useTransform(springY, [-65, 65], [8, -8]);
-  const rotateY = useTransform(springX, [-65, 65], [-8, 8]);
-
-  const glowX = useTransform(springX, [-65, 65], [15, 85]);
-  const glowY = useTransform(springY, [-65, 65], [15, 85]);
-  const glowBg = useMotionTemplate`radial-gradient(circle at ${glowX}% ${glowY}%, rgba(103,87,255,0.10), transparent 65%)`;
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-    rawX.set(e.clientX - rect.left - rect.width / 2);
-    rawY.set(e.clientY - rect.top - rect.height / 2);
-  };
-
-  const handleMouseLeave = () => {
-    rawX.set(0);
-    rawY.set(0);
-    setHovered(false);
-  };
+function SolucionCard({ card, accent }: { card: Card; accent: string }) {
+  const Icon = iconMap[card.icon];
+  const accentVar = `var(${accent})`;
 
   return (
-    <motion.div
-      ref={ref}
+    <motion.a
+      href={`#${card.id}`}
       variants={fadeUp}
-      style={{
-        rotateX,
-        rotateY,
-        transformPerspective: 900,
-        transformStyle: "preserve-3d",
-      }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={handleMouseLeave}
-      className="relative flex flex-col gap-5 p-8 bg-white overflow-hidden cursor-default"
+      whileHover={{ y: -6 }}
+      transition={{ type: "spring", stiffness: 260, damping: 20 }}
+      className="glass-card group relative flex flex-col gap-3 rounded-[var(--radius-lg)] p-6"
     >
-      {/* Mouse-follow glow */}
-      <motion.div
-        className="pointer-events-none absolute inset-0"
-        style={{ background: glowBg }}
-      />
-
-      {/* Línea superior on hover */}
-      <div
-        className="absolute top-0 left-0 right-0 h-[1px] transition-opacity duration-400"
-        style={{
-          background: "linear-gradient(90deg, transparent, #6757FF, transparent)",
-          opacity: hovered ? 1 : 0,
-        }}
-      />
-
-      {/* Número */}
-      <span className="relative text-xs font-mono text-[var(--slate)]">
-        {card.number} —
-      </span>
-
-      {/* Ícono */}
-      <div
-        className="relative w-10 h-10 rounded-[var(--radius-sm)] flex items-center justify-center shrink-0"
-        style={{
-          background: "rgba(103,87,255,0.08)",
-          border: "1px solid rgba(103,87,255,0.18)",
-        }}
-      >
-        <Icon size={18} color="#6757FF" />
+      <div className="flex items-center justify-between">
+        <div
+          className="flex h-11 w-11 items-center justify-center rounded-[var(--radius-sm)]"
+          style={{
+            color: accentVar,
+            background: `color-mix(in srgb, ${accentVar} 14%, transparent)`,
+            border: `1px solid color-mix(in srgb, ${accentVar} 28%, transparent)`,
+          }}
+        >
+          <Icon size={20} />
+        </div>
+        <span className="font-mono text-xs text-[var(--slate)]">{card.number}</span>
       </div>
 
-      {/* Título */}
-      <h3 className="relative text-[16px] font-semibold text-[var(--ink)]">
+      <h3 className="text-[15px] font-semibold leading-snug text-[var(--ink)]">
         {card.title}
       </h3>
+      <p className="text-[13px] leading-relaxed text-[var(--slate)]">{card.description}</p>
 
-      {/* Descripción */}
-      <p className="relative text-[13px] leading-relaxed flex-1 text-[var(--slate)]">
-        {card.description}
-      </p>
-
-      {/* Tags */}
-      <div className="relative flex flex-wrap gap-2 mt-auto">
+      <div className="mt-1 flex flex-wrap gap-1.5">
         {card.tags.map((tag) => (
           <span
             key={tag}
-            className="text-[12px] text-[var(--flow-violet)] px-2.5 py-1 rounded-full"
+            className="rounded-full px-2.5 py-0.5 text-[11px] font-medium"
             style={{
-              background: "rgba(103,87,255,0.07)",
-              border: "1px solid rgba(103,87,255,0.20)",
+              color: accentVar,
+              background: `color-mix(in srgb, ${accentVar} 9%, transparent)`,
             }}
           >
             {tag}
           </span>
         ))}
       </div>
-    </motion.div>
+    </motion.a>
   );
 }
 
-/* ── Section ──────────────────────────────────────────────────────── */
 export default function Soluciones() {
+  const cards = soluciones.cards;
+
   return (
     <section
-      id="servicios"
-      className="py-24 px-6"
-      style={{
-        background: "rgba(103,87,255,0.03)",
-        borderTop: "0.5px solid var(--border)",
-        borderBottom: "0.5px solid var(--border)",
-      }}
+      id="soluciones"
+      className="relative overflow-hidden bg-[var(--violet-50)] px-6 py-24"
+      style={{ borderTop: "0.5px solid var(--border)", borderBottom: "0.5px solid var(--border)" }}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="mx-auto max-w-6xl">
+        {/* Encabezado */}
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={VIEWPORT}
           variants={staggerSlow}
+          className="mx-auto max-w-2xl text-center"
         >
           <motion.div variants={fadeUp}>
-            <SectionLabel>{soluciones.label}</SectionLabel>
+            <SectionLabel center>{soluciones.label}</SectionLabel>
           </motion.div>
-
           <motion.h2
             variants={fadeUp}
-            className="text-3xl md:text-[36px] font-light leading-tight tracking-tight text-[var(--ink)] mb-12 max-w-2xl"
+            className="text-3xl font-light leading-tight tracking-tight text-[var(--ink)] md:text-[40px]"
           >
             {soluciones.h2.prefix}{" "}
-            <strong className="font-semibold">{soluciones.h2.strong}</strong>{" "}
+            <strong className="gradient-text font-semibold">{soluciones.h2.strong}</strong>{" "}
             {soluciones.h2.suffix}
           </motion.h2>
+          <motion.p variants={fadeUp} className="mx-auto mt-4 max-w-md text-[14px] text-[var(--slate)]">
+            {soluciones.intro}
+          </motion.p>
+        </motion.div>
 
+        {/* Orbital */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT}
+          variants={staggerSlow}
+          className="relative mt-14 grid grid-cols-1 items-center gap-6 lg:grid-cols-3 lg:gap-8"
+        >
+          {/* Columna izquierda */}
+          <div className="order-2 flex flex-col gap-6 lg:order-1">
+            <SolucionCard card={cards[0]} accent={ACCENTS[0]} />
+            <SolucionCard card={cards[1]} accent={ACCENTS[1]} />
+          </div>
+
+          {/* Centro — pulpo + anillos */}
           <motion.div
-            variants={staggerSlow}
-            className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[var(--border)]"
-            style={{ perspective: "1200px" }}
+            variants={scaleIn}
+            className="order-1 flex min-h-[280px] items-center justify-center lg:order-2"
           >
-            {soluciones.cards.map((card) => (
-              <TiltCard key={card.number} card={card} />
-            ))}
+            <div className="relative flex aspect-square w-full max-w-[360px] items-center justify-center">
+              {/* Anillos concéntricos */}
+              <div aria-hidden className="absolute aspect-square w-[96%] rounded-full border border-[var(--border)]" />
+              <div aria-hidden className="absolute aspect-square w-[72%] rounded-full border border-[var(--border)]" />
+              <div aria-hidden className="absolute aspect-square w-[48%] rounded-full border border-[var(--border)]" />
+              <div
+                aria-hidden
+                className="animate-spin-slow absolute aspect-square w-[84%] rounded-full border border-dashed border-[var(--border-strong)]"
+              />
+              {/* Glow */}
+              <div
+                aria-hidden
+                className="absolute aspect-square w-[60%] rounded-full"
+                style={{ background: "radial-gradient(circle, rgba(139,92,246,0.18), transparent 70%)" }}
+              />
+              <Octopus size={210} interactive pose="idle" className="relative z-10 !h-auto !w-[58%]" />
+            </div>
           </motion.div>
+
+          {/* Columna derecha */}
+          <div className="order-3 flex flex-col gap-6 lg:order-3">
+            <SolucionCard card={cards[2]} accent={ACCENTS[2]} />
+            <SolucionCard card={cards[3]} accent={ACCENTS[3]} />
+          </div>
         </motion.div>
       </div>
     </section>
