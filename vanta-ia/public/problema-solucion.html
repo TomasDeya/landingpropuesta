@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>OctoFlow · El problema → La solución</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  /* ─── Paleta estricta ─────────────────────────────────────────────── */
+  :root {
+    --violet:    #6757FF;
+    --violet-dp: #4D3FE0;
+    --lilac:     #C4A1FF;
+    --pink:      #DD68AE;
+    --lavender:  #EDEAFF;
+    --ink:       #1F2430;
+    --slate:     #667085;
+    --cloud:     #F7F8FC;
+    --white:     #FFFFFF;
+
+    --r-sm: 8px;
+    --r-md: 16px;
+    --r-lg: 24px;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: var(--ink);
+    color: var(--lavender);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── Panel ───────────────────────────────────────────────────────── */
+  .panel {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    /* Oscuro al centro → violeta profundo en los bordes */
+    background:
+      radial-gradient(130% 120% at 50% 45%, var(--ink) 36%, var(--violet-dp) 128%),
+      var(--ink);
+    padding: 64px 40px;
+  }
+
+  /* Grain sutil (~8%) */
+  .grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.08;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 190px 190px;
+  }
+
+  /* ─── Layout ──────────────────────────────────────────────────────── */
+  .wrap {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr minmax(300px, 380px) 1fr;
+    align-items: center;
+    gap: 32px;
+  }
+
+  /* SVG de conectores (encima del wrap, debajo de nodos) */
+  .links {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+  }
+
+  .col { display: flex; flex-direction: column; gap: 40px; }
+  .col-left  { align-items: flex-end;   text-align: right; }
+  .col-right { align-items: flex-start; text-align: left;  }
+
+  .col-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--lilac);
+    opacity: 0.9;
+  }
+
+  /* ─── Ítems ───────────────────────────────────────────────────────── */
+  .item {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    max-width: 320px;
+    cursor: default;
+    /* Entrada por CSS (auto-play, no depende de JS) */
+    opacity: 0;
+    transform: translateY(14px);
+    animation: rise 760ms var(--ease) forwards;
+  }
+  .col-right .item { flex-direction: row; }
+  .col-left  .item { flex-direction: row; } /* texto luego nodo via order */
+  .col-left  .item .node { order: 2; }
+  .col-left  .item .item-text { order: 1; }
+
+  /* Cascada lenta (agua, no electricidad) */
+  .col .item:nth-of-type(1) { animation-delay: 0.30s; }
+  .col .item:nth-of-type(2) { animation-delay: 0.48s; }
+  .col .item:nth-of-type(3) { animation-delay: 0.66s; }
+
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+  .item-text { display: flex; flex-direction: column; gap: 4px; }
+  .item-title {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--white);
+  }
+  .item-desc {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--lilac);
+    opacity: 0.72;
+  }
+
+  .node {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1.5px solid var(--white);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--lavender);
+    transition: border-color 420ms var(--ease), background-color 420ms var(--ease),
+                box-shadow 420ms var(--ease), color 420ms var(--ease);
+  }
+
+  /* Hover: el nodo se enciende en violeta + glow suave */
+  .item:hover .node {
+    border-color: var(--violet);
+    background: var(--violet);
+    color: var(--white);
+    box-shadow: 0 0 0 6px rgba(103, 87, 255, 0.16), 0 0 24px rgba(103, 87, 255, 0.5);
+  }
+
+  /* ─── Orbe ────────────────────────────────────────────────────────── */
+  .orb-wrap {
+    position: relative;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .orb {
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 0 60px rgba(103, 87, 255, 0.22));
+  }
+
+  /* Trails: viajan alrededor (dashoffset), el degradé fijo los "enciende" hacia la derecha */
+  .trail { animation: travel linear infinite; }
+  @keyframes travel { to { stroke-dashoffset: var(--off); } }
+
+  /* ─── Responsive ──────────────────────────────────────────────────── */
+  @media (max-width: 880px) {
+    .panel { padding: 56px 22px; }
+    .wrap {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      max-width: 460px;
+    }
+    .links { display: none; }
+    .orb-wrap { order: -1; }
+    .orb { max-width: 230px; }
+    .col { gap: 22px; align-items: stretch; }
+    .col-left, .col-right { text-align: left; }
+    .col-left .item, .col-right .item { flex-direction: row; max-width: none; }
+    .col-left .item .node { order: 0; }
+    .col-left .item .item-text { order: 1; }
+    .col-title { text-align: left; }
+  }
+
+  /* ─── Reduced motion ──────────────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .item { opacity: 1; transform: none; animation: none !important; }
+    .trail { animation: none !important; }
+    .link-path { stroke-dashoffset: 0 !important; }
+  }
+</style>
+</head>
+<body>
+  <section class="panel">
+    <div class="grain"></div>
+
+    <div class="wrap" id="wrap">
+      <!-- Conectores (los dibuja el JS) -->
+      <svg class="links" id="links" xmlns="http://www.w3.org/2000/svg"></svg>
+
+      <!-- ════════ EDITÁ EL CONTENIDO ACÁ (placeholder) ════════ -->
+      <div class="col col-left">
+        <h2 class="col-title">El problema</h2>
+
+        <div class="item" data-link="1">
+          <div class="item-text">
+            <span class="item-title">Respuestas que llegan tarde</span>
+            <span class="item-desc">El cliente escribe y, si no le contestás en minutos, se va con otro.</span>
+          </div>
+          <div class="node">1</div>
+        </div>
+
+        <div class="item" data-link="2">
+          <div class="item-text">
+            <span class="item-title">Ventas que se enfrían</span>
+            <span class="item-desc">Consultó, no compró, y nadie volvió a escribirle.</span>
+          </div>
+          <div class="node">2</div>
+        </div>
+
+        <div class="item" data-link="3">
+          <div class="item-text">
+            <span class="item-title">Negocio a ciegas</span>
+            <span class="item-desc">Sin el stock y las ventas a mano, decidís a ojo.</span>
+          </div>
+          <div class="node">3</div>
+        </div>
+      </div>
+
+      <!-- Orbe -->
+      <div class="orb-wrap">
+        <svg class="orb" viewBox="0 0 400 400" id="orb" aria-hidden="true">
+          <defs>
+            <linearGradient id="lr" x1="0" y1="0.5" x2="1" y2="0.5">
+              <stop offset="0"    stop-color="#1F2430"/>
+              <stop offset="0.40" stop-color="#4D3FE0" stop-opacity="0.45"/>
+              <stop offset="0.62" stop-color="#6757FF"/>
+              <stop offset="0.82" stop-color="#C4A1FF"/>
+              <stop offset="1"    stop-color="#DD68AE"/>
+            </linearGradient>
+            <radialGradient id="rightVibe" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0"    stop-color="#C4A1FF" stop-opacity="0.95"/>
+              <stop offset="0.34" stop-color="#6757FF" stop-opacity="0.62"/>
+              <stop offset="0.68" stop-color="#DD68AE" stop-opacity="0.22"/>
+              <stop offset="1"    stop-color="#6757FF" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="leftMute" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0" stop-color="#4D3FE0" stop-opacity="0.20"/>
+              <stop offset="1" stop-color="#4D3FE0" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="soft"  x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.6"/></filter>
+            <filter id="softer" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7"/></filter>
+          </defs>
+
+          <!-- Izquierda apagada · derecha encendida -->
+          <ellipse cx="150" cy="205" rx="116" ry="136" fill="url(#leftMute)"  filter="url(#softer)"/>
+          <ellipse cx="252" cy="194" rx="124" ry="140" fill="url(#rightVibe)" filter="url(#softer)"/>
+
+          <!-- Anillos base (suaves, fijos) -->
+          <g fill="none" stroke="url(#lr)" stroke-width="1">
+            <circle cx="200" cy="200" r="58"  opacity="0.35"/>
+            <circle cx="200" cy="200" r="92"  opacity="0.28"/>
+            <circle cx="200" cy="200" r="126" opacity="0.22"/>
+            <circle cx="200" cy="200" r="160" opacity="0.16"/>
+          </g>
+
+          <!-- Trails (viajan despacio; el degradé los enciende hacia la derecha) -->
+          <g fill="none" stroke="url(#lr)" stroke-linecap="round" filter="url(#soft)">
+            <circle class="trail" cx="200" cy="200" r="72"  stroke-width="2.4"
+                    style="stroke-dasharray:34 150;  --off:-452px;  animation-duration:78s;"/>
+            <circle class="trail" cx="200" cy="200" r="104" stroke-width="2"
+                    style="stroke-dasharray:26 210;  --off:653px;   animation-duration:96s;"/>
+            <circle class="trail" cx="200" cy="200" r="136" stroke-width="1.8"
+                    style="stroke-dasharray:40 250;  --off:-854px;  animation-duration:116s;"/>
+            <circle class="trail" cx="200" cy="200" r="168" stroke-width="1.5"
+                    style="stroke-dasharray:30 300;  --off:1056px;  animation-duration:136s;"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- ════════ EDITÁ EL CONTENIDO ACÁ (placeholder) ════════ -->
+      <div class="col col-right">
+        <h2 class="col-title">La solución</h2>
+
+        <div class="item" data-link="1">
+          <div class="node">1</div>
+          <div class="item-text">
+            <span class="item-title">Atención al instante</span>
+            <span class="item-desc">Un agente responde cada consulta al toque, las 24 horas.</span>
+          </div>
+        </div>
+
+        <div class="item" data-link="2">
+          <div class="node">2</div>
+          <div class="item-text">
+            <span class="item-title">Clientes que vuelven</span>
+            <span class="item-desc">Detectamos al que no compró y retomamos en el momento justo.</span>
+          </div>
+        </div>
+
+        <div class="item" data-link="3">
+          <div class="node">3</div>
+          <div class="item-text">
+            <span class="item-title">Todo claro</span>
+            <span class="item-desc">Te damos stock, ventas y movimientos cuando los pedís.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<script>
+(function () {
+  const wrap  = document.getElementById('wrap');
+  const links = document.getElementById('links');
+  const orb   = document.getElementById('orb');
+  const items = Array.from(document.querySelectorAll('.item'));
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const NS = 'http://www.w3.org/2000/svg';
+
+  // Centro de un elemento, relativo al wrap.
+  function center(el, base) {
+    const r = el.getBoundingClientRect();
+    return { x: r.left + r.width / 2 - base.left, y: r.top + r.height / 2 - base.top };
+  }
+
+  // Punto del borde del orbe en dirección a N.
+  function orbAnchor(orbC, R, N) {
+    const dx = N.x - orbC.x, dy = N.y - orbC.y;
+    const d = Math.hypot(dx, dy) || 1;
+    return { x: orbC.x + (dx / d) * R, y: orbC.y + (dy / d) * R };
+  }
+
+  // Polilínea con quiebre a 45°: del nodo, tramo horizontal, luego diagonal 45° al orbe.
+  function elbow(N, A) {
+    const sx = Math.sign(A.x - N.x) || 1;
+    const dy = A.y - N.y;
+    const leg = Math.min(Math.abs(dy), Math.abs(A.x - N.x)); // largo del tramo 45°
+    const P = { x: A.x - sx * leg, y: N.y };
+    return [N, P, A];
+  }
+
+  function pointsStr(pts) {
+    return pts.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+  }
+  function pathLen(pts) {
+    let L = 0;
+    for (let i = 1; i < pts.length; i++) L += Math.hypot(pts[i].x - pts[i-1].x, pts[i].y - pts[i-1].y);
+    return L;
+  }
+
+  let drawn = false;
+
+  function build() {
+    if (window.matchMedia('(max-width: 880px)').matches) { links.innerHTML = ''; return; }
+
+    const base = wrap.getBoundingClientRect();
+    links.setAttribute('viewBox', `0 0 ${base.width} ${base.height}`);
+    links.innerHTML = '';
+
+    const orbBox = orb.getBoundingClientRect();
+    const orbC = { x: orbBox.left + orbBox.width / 2 - base.left, y: orbBox.top + orbBox.height / 2 - base.top };
+    const R = orbBox.width / 2 * 0.96;
+
+    items.forEach((item, i) => {
+      const node = item.querySelector('.node');
+      const N = center(node, base);
+      const A = orbAnchor(orbC, R, N);
+      const pts = elbow(N, A);
+
+      const poly = document.createElementNS(NS, 'polyline');
+      poly.setAttribute('class', 'link-path');
+      poly.setAttribute('points', pointsStr(pts));
+      poly.setAttribute('fill', 'none');
+      poly.setAttribute('stroke', '#C4A1FF');
+      poly.setAttribute('stroke-width', '1.25');
+      poly.setAttribute('stroke-opacity', '0.5');
+      poly.setAttribute('stroke-linecap', 'round');
+      poly.setAttribute('stroke-linejoin', 'round');
+
+      const L = pathLen(pts);
+      poly.style.strokeDasharray = L;
+      poly.style.strokeDashoffset = (reduce || drawn) ? 0 : L;
+      poly.style.transition = 'stroke-dashoffset 760ms var(--ease, ease-out), stroke 380ms ease, stroke-opacity 380ms ease, stroke-width 380ms ease';
+      links.appendChild(poly);
+      item._link = poly;
+      item._len = L;
+
+      // Hover: la línea se enciende y se redibuja
+      item.addEventListener('mouseenter', () => {
+        poly.setAttribute('stroke', '#6757FF');
+        poly.setAttribute('stroke-opacity', '1');
+        poly.setAttribute('stroke-width', '2');
+        if (!reduce) { poly.style.strokeDashoffset = L; void poly.getBoundingClientRect(); poly.style.strokeDashoffset = 0; }
+      });
+      item.addEventListener('mouseleave', () => {
+        poly.setAttribute('stroke', '#C4A1FF');
+        poly.setAttribute('stroke-opacity', '0.5');
+        poly.setAttribute('stroke-width', '1.25');
+      });
+    });
+
+  }
+
+  // Dibuja las líneas en cascada lenta (sincronizado con la entrada de los ítems).
+  function draw() {
+    drawn = true;
+    items.forEach((item, i) => {
+      if (!item._link) return;
+      if (reduce) { item._link.style.strokeDashoffset = 0; return; }
+      setTimeout(() => { if (item._link) item._link.style.strokeDashoffset = 0; }, 320 + i * 175);
+    });
+  }
+
+  function init() { build(); draw(); }
+
+  // El script está al final del body → el DOM ya está listo.
+  init();
+  // Reconstruir cuando cargan las fuentes y al hacer resize (posiciones exactas).
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+  window.addEventListener('load', build);
+  let rt;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(build, 150); });
+})();
+</script>
+</body>
+</html>
