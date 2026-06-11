@@ -54,18 +54,8 @@ export default function Hero() {
       />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
-        {/* Badge */}
-        <div className="flex justify-center">
-          <span
-            className="reveal-up shimmer-badge shimmer-badge-dark animate-float inline-block rounded-full px-4 py-1.5 text-[13px] font-medium text-[var(--violet-200)]"
-            style={{ animationDelay: "0.05s" }}
-          >
-            {hero.badge}
-          </span>
-        </div>
-
         {/* Headline gigante + pulpo debajo */}
-        <motion.div style={{ y: textY }} className="relative mt-6 text-center">
+        <motion.div style={{ y: textY }} className="relative text-center">
           {/* h1 accesible con el texto completo (el pulpo es decorativo) */}
           <h1 className="sr-only">{hero.h1Line1} {hero.h1Line2}</h1>
 
