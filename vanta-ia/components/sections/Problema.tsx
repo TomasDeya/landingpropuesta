@@ -17,7 +17,7 @@ type IconKey = keyof typeof iconMap;
 
 export default function Problema() {
   return (
-    <section className="bg-white py-24 px-6">
+    <section className="bg-[var(--violet-50)] py-24 px-6">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial="hidden"
@@ -25,18 +25,20 @@ export default function Problema() {
           viewport={{ once: true }}
           variants={stagger}
         >
-          <motion.div variants={fadeUp}>
-            <SectionLabel>{problema.label}</SectionLabel>
-          </motion.div>
+          <div className="mx-auto mb-12 max-w-2xl text-center">
+            <motion.div variants={fadeUp}>
+              <SectionLabel center>{problema.label}</SectionLabel>
+            </motion.div>
 
-          <motion.h2
-            variants={fadeUp}
-            className="text-3xl md:text-[36px] font-light leading-tight tracking-tight text-[var(--ink)] mb-12 max-w-xl"
-          >
-            {problema.h2.prefix}{" "}
-            <strong className="font-semibold">{problema.h2.strong}</strong>{" "}
-            {problema.h2.suffix}
-          </motion.h2>
+            <motion.h2
+              variants={fadeUp}
+              className="text-3xl md:text-[36px] font-light leading-tight tracking-tight text-[var(--ink)]"
+            >
+              {problema.h2.prefix}{" "}
+              <strong className="font-semibold">{problema.h2.strong}</strong>{" "}
+              {problema.h2.suffix}
+            </motion.h2>
+          </div>
 
           <motion.div
             variants={stagger}
@@ -48,7 +50,7 @@ export default function Problema() {
                 <motion.div
                   key={card.title}
                   variants={fadeUp}
-                  className="flex flex-col gap-4 p-6 rounded-[var(--radius-md)] bg-[var(--cloud)] border border-[var(--border)]"
+                  className="flex flex-col gap-4 p-6 rounded-[var(--radius-md)] bg-white border border-[var(--border)]"
                 >
                   <div
                     className="w-10 h-10 rounded-[var(--radius-sm)] flex items-center justify-center shrink-0 text-[var(--brand-accent)]"

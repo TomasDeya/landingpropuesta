@@ -2,33 +2,42 @@
 
 import { motion } from "framer-motion";
 import SectionLabel from "@/components/ui/SectionLabel";
+import Aurora from "@/components/ui/Aurora";
 import { proceso } from "@/content/copy";
 import { fadeUp, stagger, EASE, VIEWPORT } from "@/lib/motion";
 
+const LINE_H = "linear-gradient(to right, var(--violet-400), rgba(167,139,250,0.06))";
+const LINE_V = "linear-gradient(to bottom, var(--violet-400), rgba(167,139,250,0.06))";
+
 export default function Proceso() {
   return (
-    <section id="proceso" className="bg-[var(--cloud)] px-6 py-24">
-      <div className="mx-auto max-w-6xl">
+    <section id="proceso" className="relative overflow-hidden px-6 py-24">
+      <Aurora />
+      <div className="hero-grid pointer-events-none absolute inset-0 opacity-25" />
+
+      <div className="relative z-10 mx-auto max-w-6xl">
         <motion.div initial="hidden" whileInView="visible" viewport={VIEWPORT} variants={stagger}>
-          <motion.div variants={fadeUp}>
-            <SectionLabel>{proceso.label}</SectionLabel>
-          </motion.div>
-          <motion.h2
-            variants={fadeUp}
-            className="max-w-xl text-3xl font-light leading-tight tracking-tight text-[var(--ink)] md:text-[36px]"
-          >
-            {proceso.h2.prefix}{" "}
-            <strong className="gradient-text font-semibold">{proceso.h2.strong}</strong>{" "}
-            {proceso.h2.suffix}
-          </motion.h2>
+          <div className="mx-auto max-w-2xl text-center">
+            <motion.div variants={fadeUp}>
+              <SectionLabel center tone="light">{proceso.label}</SectionLabel>
+            </motion.div>
+            <motion.h2
+              variants={fadeUp}
+              className="text-3xl font-light leading-tight tracking-tight text-[var(--on-dark)] md:text-[36px]"
+            >
+              {proceso.h2.prefix}{" "}
+              <strong className="gradient-text-light font-semibold">{proceso.h2.strong}</strong>{" "}
+              {proceso.h2.suffix}
+            </motion.h2>
+          </div>
         </motion.div>
 
         {/* Timeline */}
         <div className="relative mt-14">
           {/* Línea vertical (mobile) */}
           <motion.div
-            className="timeline-line absolute left-[18px] top-3 w-px md:hidden"
-            style={{ height: "calc(100% - 1.5rem)", transformOrigin: "top" }}
+            className="absolute left-[18px] top-3 w-px md:hidden"
+            style={{ height: "calc(100% - 1.5rem)", transformOrigin: "top", background: LINE_V }}
             initial={{ scaleY: 0 }}
             whileInView={{ scaleY: 1 }}
             viewport={VIEWPORT}
@@ -36,8 +45,8 @@ export default function Proceso() {
           />
           {/* Línea horizontal (desktop) */}
           <motion.div
-            className="timeline-line-h absolute left-0 right-0 top-[18px] hidden h-px md:block"
-            style={{ transformOrigin: "left" }}
+            className="absolute left-0 right-0 top-[18px] hidden h-px md:block"
+            style={{ transformOrigin: "left", background: LINE_H }}
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={VIEWPORT}
@@ -60,10 +69,10 @@ export default function Proceso() {
               >
                 {/* Nodo */}
                 <div
-                  className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-[13px] font-semibold text-[var(--brand-accent)]"
+                  className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-[13px] font-semibold text-[var(--brand)]"
                   style={{
-                    border: "1px solid var(--border-strong)",
-                    boxShadow: "0 0 14px rgba(var(--brand-accent-rgb),0.18)",
+                    border: "1px solid rgba(var(--violet-300-rgb),0.6)",
+                    boxShadow: "0 0 16px rgba(139,92,246,0.45)",
                   }}
                 >
                   {step.number}
@@ -71,11 +80,11 @@ export default function Proceso() {
 
                 {/* Contenido */}
                 <div className="flex flex-col gap-1.5 md:items-center">
-                  <span className="inline-block w-fit rounded-full bg-[var(--violet-100)] px-2.5 py-0.5 font-mono text-[11px] text-[var(--brand)]">
+                  <span className="inline-block w-fit rounded-full bg-[rgba(var(--violet-300-rgb),0.16)] px-2.5 py-0.5 font-mono text-[11px] text-[var(--violet-200)]">
                     {step.duration}
                   </span>
-                  <h3 className="text-[15px] font-semibold text-[var(--ink)]">{step.title}</h3>
-                  <p className="max-w-[22ch] text-[13px] leading-relaxed text-[var(--slate)]">
+                  <h3 className="text-[15px] font-semibold text-[var(--on-dark)]">{step.title}</h3>
+                  <p className="max-w-[22ch] text-[13px] leading-relaxed text-[var(--on-dark-muted)]">
                     {step.description}
                   </p>
                 </div>
@@ -90,9 +99,9 @@ export default function Proceso() {
           whileInView={{ opacity: 1 }}
           viewport={VIEWPORT}
           transition={{ delay: 0.6 }}
-          className="mt-10 max-w-2xl text-[12px] leading-relaxed text-[var(--slate)]"
+          className="mt-10 max-w-2xl text-[12px] leading-relaxed text-[var(--on-dark-muted)]"
         >
-          <span className="font-semibold text-[var(--ink)]">Nota:</span> {proceso.note}
+          <span className="font-semibold text-[var(--on-dark)]">Nota:</span> {proceso.note}
         </motion.p>
       </div>
     </section>

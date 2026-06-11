@@ -18,7 +18,7 @@ type Stat = {
 
 function StatBlock({ stat }: { stat: Stat }) {
   return (
-    <div className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--violet-50)] p-5">
+    <div className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-white p-5">
       <div className="flex items-baseline gap-2">
         {typeof stat.to === "number" ? (
           <AnimatedCounter
@@ -104,7 +104,7 @@ function DetalleRow({ item, index }: { item: Item; index: number }) {
 
 export default function SolucionesDetalle() {
   return (
-    <section className="bg-white px-6 py-24">
+    <section className="bg-[var(--violet-50)] px-6 py-24">
       <div className="mx-auto max-w-5xl">
         <motion.div initial="hidden" whileInView="visible" viewport={VIEWPORT} variants={stagger}>
           <motion.div variants={fadeUp}>

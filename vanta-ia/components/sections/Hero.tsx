@@ -64,30 +64,19 @@ export default function Hero() {
           </span>
         </div>
 
-        {/* Headline gigante + pulpo rompiendo la tipografía */}
+        {/* Headline gigante + pulpo debajo */}
         <motion.div style={{ y: textY }} className="relative mt-6 text-center">
-          {/* h1 accesible con el texto completo (el pulpo es decorativo, fuera del heading) */}
+          {/* h1 accesible con el texto completo (el pulpo es decorativo) */}
           <h1 className="sr-only">{hero.h1Line1} {hero.h1Line2}</h1>
 
           <div
             aria-hidden="true"
-            className="relative font-semibold leading-[0.9] tracking-[-0.04em] text-[var(--on-dark)]"
+            className="font-semibold leading-[0.95] tracking-[-0.04em] text-[var(--on-dark)]"
           >
-            {/* Línea 1 — detrás del pulpo */}
-            <span className="relative z-0 block text-[clamp(1.85rem,8.5vw,7rem)]">
+            <span className="block text-[clamp(1.85rem,8.5vw,7rem)]">
               <SplitWords text={hero.h1Line1} delay={0.15} />
             </span>
-
-            {/* Pulpo — entre las dos líneas */}
-            <motion.div
-              style={{ y: octoY, scale: octoScale }}
-              className="relative z-10 mx-auto -my-[3%] w-[clamp(168px,30vw,290px)]"
-            >
-              <Octopus size={290} interactive decorative glow hint pose="idle" className="!h-auto !w-full" />
-            </motion.div>
-
-            {/* Línea 2 — delante del pulpo */}
-            <span className="relative z-20 block text-[clamp(1.85rem,8.5vw,7rem)]">
+            <span className="block text-[clamp(1.85rem,8.5vw,7rem)]">
               <span className="inline-block overflow-hidden align-bottom">
                 <span className="reveal-rise gradient-text-light" style={{ animationDelay: "0.4s" }}>
                   {hero.h1Line2}
@@ -95,6 +84,14 @@ export default function Hero() {
               </span>
             </span>
           </div>
+
+          {/* Pulpo — debajo del headline */}
+          <motion.div
+            style={{ y: octoY, scale: octoScale }}
+            className="mx-auto mt-5 w-[clamp(160px,26vw,250px)]"
+          >
+            <Octopus size={250} interactive decorative glow pose="idle" className="!h-auto !w-full" />
+          </motion.div>
         </motion.div>
 
         {/* Subtítulo */}

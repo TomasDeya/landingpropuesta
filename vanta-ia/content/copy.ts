@@ -25,7 +25,7 @@ export const hero = {
   h1Line1: "Tu negocio,",
   h1Line2: "trabajando solo.",
   subtitle:
-    "Implementamos agentes de IA que atienden a tus clientes, recuperan ventas y te dan el control de tu negocio — sin que muevas un dedo.",
+    "Implementamos agentes de IA que atienden a tus clientes, recuperan ventas y te dan el control de tu negocio.",
   ctaPrimary:   "Quiero automatizar mi negocio",
   ctaSecondary: "Ver soluciones",
   // Stats con prueba social (contadores animados)

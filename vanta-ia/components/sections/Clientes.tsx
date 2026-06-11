@@ -11,21 +11,22 @@ const row2 = [...clientes.items, ...clientes.items];
 
 export default function Clientes() {
   return (
-    <section id="clientes" className="bg-white py-24">
+    <section id="clientes" className="bg-[var(--violet-50)] py-24">
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={stagger}
+          className="mx-auto max-w-2xl text-center"
         >
           <motion.div variants={fadeUp}>
-            <SectionLabel>{clientes.label}</SectionLabel>
+            <SectionLabel center>{clientes.label}</SectionLabel>
           </motion.div>
 
           <motion.h2
             variants={fadeUp}
-            className="text-3xl md:text-[36px] font-light leading-tight tracking-tight text-[var(--ink)] mb-3 max-w-xl"
+            className="text-3xl md:text-[36px] font-light leading-tight tracking-tight text-[var(--ink)] mb-3"
           >
             {clientes.h2.prefix}{" "}
             <strong className="font-semibold">{clientes.h2.strong}</strong>
@@ -33,7 +34,7 @@ export default function Clientes() {
 
           <motion.p
             variants={fadeUp}
-            className="text-[14px] mb-12 max-w-md text-[var(--slate)]"
+            className="text-[14px] mb-12 mx-auto max-w-md text-[var(--slate)]"
           >
             {clientes.subtitle}
           </motion.p>
@@ -47,14 +48,14 @@ export default function Clientes() {
           className="pointer-events-none absolute left-0 top-0 bottom-0 z-10"
           style={{
             width: "calc((100vw - min(100vw, 72rem)) / 2 + 1.5rem + 3rem)",
-            background: "linear-gradient(to right, var(--white) 65%, transparent)",
+            background: "linear-gradient(to right, var(--violet-50) 65%, transparent)",
           }}
         />
         <div
           className="pointer-events-none absolute right-0 top-0 bottom-0 z-10"
           style={{
             width: "calc((100vw - min(100vw, 72rem)) / 2 + 1.5rem + 3rem)",
-            background: "linear-gradient(to left, var(--white) 65%, transparent)",
+            background: "linear-gradient(to left, var(--violet-50) 65%, transparent)",
           }}
         />
 
@@ -98,10 +99,10 @@ export default function Clientes() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="flex flex-wrap gap-10 justify-center md:justify-start"
+          className="flex flex-wrap gap-10 justify-center"
         >
           {clientes.stats.map((stat) => (
-            <div key={stat.label} className="flex flex-col items-center md:items-start gap-0.5">
+            <div key={stat.label} className="flex flex-col items-center gap-0.5">
               <span className="text-2xl font-semibold text-[var(--ink)]">{stat.value}</span>
               <span className="text-[13px] text-[var(--slate)]">{stat.label}</span>
             </div>

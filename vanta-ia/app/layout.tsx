@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: "Agentes de IA para Empresas en Argentina | OctoFlow",
   description:
-    "Implementamos agentes de IA que atienden a tus clientes, recuperan ventas y te dan el control de tu negocio — sin que muevas un dedo. Soluciones de IA para PYMEs y empresas medianas en Argentina y LATAM.",
+    "Implementamos agentes de IA que atienden a tus clientes, recuperan ventas y te dan el control de tu negocio. Soluciones de IA para PYMEs y empresas medianas en Argentina y LATAM.",
   keywords: [
     "agentes de IA para empresas",
     "automatización con inteligencia artificial",

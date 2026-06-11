@@ -6,7 +6,6 @@ import Soluciones        from "@/components/sections/Soluciones";
 import SolucionesDetalle from "@/components/sections/SolucionesDetalle";
 import Proceso           from "@/components/sections/Proceso";
 import Clientes          from "@/components/sections/Clientes";
-import Diferenciadores   from "@/components/sections/Diferenciadores";
 import CtaFinal          from "@/components/sections/CtaFinal";
 
 export default function Home() {
@@ -20,7 +19,6 @@ export default function Home() {
         <SolucionesDetalle />
         <Proceso />
         <Clientes />
-        <Diferenciadores />
         <CtaFinal />
       </main>
       <Footer />
