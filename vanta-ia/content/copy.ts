@@ -299,6 +299,12 @@ export const ctaFinal = {
   ctaPrimary:        "Quiero automatizar mi negocio",
 } as const;
 
+export const liveCounter = {
+  label:   "En vivo",
+  caption: "mensajes automatizados por nuestros agentes de IA",
+  start:   248137,
+} as const;
+
 export const footer = {
   brand: { prefix: "Octo", suffix: "Flow" },
   tagline: "Tecnología para que tu negocio crezca.",
@@ -310,8 +316,7 @@ export const footer = {
     { label: "Contacto",   href: "#contacto"   },
   ],
   socials: [
-    { label: "LinkedIn",  href: "#" },
-    { label: "Instagram", href: "https://instagram.com/octoflowlabs" },
+    { label: "Instagram", href: "https://www.instagram.com/octoflow.ia" },
   ],
   copy: "© 2025 · Hecho en Argentina",
 } as const;
