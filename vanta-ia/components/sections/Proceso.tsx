@@ -80,9 +80,6 @@ export default function Proceso() {
 
                 {/* Contenido */}
                 <div className="flex flex-col gap-1.5 md:items-center">
-                  <span className="inline-block w-fit rounded-full bg-[rgba(var(--violet-300-rgb),0.16)] px-2.5 py-0.5 font-mono text-[11px] text-[var(--violet-200)]">
-                    {step.duration}
-                  </span>
                   <h3 className="text-[15px] font-semibold text-[var(--on-dark)]">{step.title}</h3>
                   <p className="max-w-[22ch] text-[13px] leading-relaxed text-[var(--on-dark-muted)]">
                     {step.description}
@@ -92,17 +89,6 @@ export default function Proceso() {
             ))}
           </motion.ol>
         </div>
-
-        {/* Nota */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={VIEWPORT}
-          transition={{ delay: 0.6 }}
-          className="mt-10 max-w-2xl text-[12px] leading-relaxed text-[var(--on-dark-muted)]"
-        >
-          <span className="font-semibold text-[var(--on-dark)]">Nota:</span> {proceso.note}
-        </motion.p>
       </div>
     </section>
   );

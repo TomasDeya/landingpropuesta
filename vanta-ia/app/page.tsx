@@ -5,7 +5,6 @@ import Problema          from "@/components/sections/Problema";
 import Soluciones        from "@/components/sections/Soluciones";
 import SolucionesDetalle from "@/components/sections/SolucionesDetalle";
 import Proceso           from "@/components/sections/Proceso";
-import Clientes          from "@/components/sections/Clientes";
 import CtaFinal          from "@/components/sections/CtaFinal";
 
 export default function Home() {
@@ -18,7 +17,6 @@ export default function Home() {
         <Soluciones />
         <SolucionesDetalle />
         <Proceso />
-        <Clientes />
         <CtaFinal />
       </main>
       <Footer />

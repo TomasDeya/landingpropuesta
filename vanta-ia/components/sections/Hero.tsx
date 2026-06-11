@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import Button from "@/components/ui/Button";
 import Aurora from "@/components/ui/Aurora";
-import AnimatedCounter from "@/components/ui/AnimatedCounter";
+import ClientStrip from "@/components/sections/ClientStrip";
 import Octopus from "@/components/octopus/Octopus";
 import { hero, WA_LINK } from "@/content/copy";
 
@@ -119,23 +119,15 @@ export default function Hero() {
           </Button>
         </div>
 
-        {/* Stats — contadores animados (prueba social) */}
+        {/* Empresas que confían — tiras de logos en movimiento */}
         <div
-          className="reveal-up mx-auto mt-12 grid max-w-4xl grid-cols-2 gap-x-6 gap-y-8 border-t border-[rgba(var(--violet-300-rgb),0.18)] pt-8 md:grid-cols-4"
+          className="reveal-up mx-auto mt-14 max-w-5xl border-t border-[rgba(var(--violet-300-rgb),0.18)] pt-8"
           style={{ animationDelay: "1s" }}
         >
-          {hero.stats.map((stat) => (
-            <div key={stat.label} className="flex flex-col items-center gap-1.5 text-center">
-              <AnimatedCounter
-                to={stat.to}
-                suffix={stat.suffix}
-                className="text-3xl font-semibold text-white md:text-4xl"
-              />
-              <span className="max-w-[18ch] text-[12px] leading-snug text-[var(--on-dark-muted)]">
-                {stat.label}
-              </span>
-            </div>
-          ))}
+          <p className="mb-5 text-center text-[11px] font-medium uppercase tracking-widest text-[var(--violet-300)]">
+            Confían en nosotros
+          </p>
+          <ClientStrip />
         </div>
       </div>
     </section>

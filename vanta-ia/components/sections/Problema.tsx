@@ -42,7 +42,7 @@ export default function Problema() {
 
           <motion.div
             variants={stagger}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2"
           >
             {problema.cards.map((card) => {
               const Icon = iconMap[card.icon as IconKey];
@@ -50,20 +50,22 @@ export default function Problema() {
                 <motion.div
                   key={card.title}
                   variants={fadeUp}
-                  className="flex flex-col gap-4 p-6 rounded-[var(--radius-md)] bg-white border border-[var(--border)]"
+                  whileHover={{ y: -5 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                  className="flex flex-col gap-5 rounded-[var(--radius-lg)] border border-[var(--border)] bg-white p-8 shadow-[var(--shadow-soft)] transition-shadow hover:shadow-[var(--shadow-card)]"
                 >
                   <div
-                    className="w-10 h-10 rounded-[var(--radius-sm)] flex items-center justify-center shrink-0 text-[var(--brand-accent)]"
+                    className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[var(--radius-md)] text-[var(--brand-accent)]"
                     style={{
-                      background: "color-mix(in srgb, var(--brand-accent) 8%, transparent)",
-                      border:     "1px solid color-mix(in srgb, var(--brand-accent) 18%, transparent)",
+                      background: "color-mix(in srgb, var(--brand-accent) 12%, transparent)",
+                      border:     "1px solid color-mix(in srgb, var(--brand-accent) 24%, transparent)",
                     }}
                   >
-                    <Icon size={18} />
+                    <Icon size={26} />
                   </div>
-                  <div className="flex flex-col gap-1.5">
-                    <h3 className="text-[13px] font-semibold text-[var(--ink)]">{card.title}</h3>
-                    <p className="text-[12px] leading-relaxed text-[var(--slate)]">
+                  <div className="flex flex-col gap-2">
+                    <h3 className="text-[19px] font-semibold leading-snug text-[var(--ink)]">{card.title}</h3>
+                    <p className="text-[14px] leading-relaxed text-[var(--slate)]">
                       {card.description}
                     </p>
                   </div>

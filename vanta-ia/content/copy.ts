@@ -14,7 +14,6 @@ export const nav = {
   links: [
     { label: "Soluciones", href: "#soluciones" },
     { label: "Proceso",    href: "#proceso"    },
-    { label: "Clientes",   href: "#clientes"   },
     { label: "Contacto",   href: "#contacto"   },
   ],
   cta: "Contactar",
@@ -308,7 +307,6 @@ export const footer = {
   links: [
     { label: "Soluciones", href: "#soluciones" },
     { label: "Proceso",    href: "#proceso"    },
-    { label: "Clientes",   href: "#clientes"   },
     { label: "Contacto",   href: "#contacto"   },
   ],
   socials: [
